@@ -7,3 +7,21 @@
 目前IE9+、Firefox 1.5+、Safari 2+、Opera 9+、Chrome、iOS版Safari以及Android版WebKit都在某种程度上支持\<canvas>
 
 ### 1、基本用法
+
+```
+<canvas id="drawing" width="200" height="200">这是一块画布。</canvas>
+```
+上述\<canvas>元素具有width和height属性，指的是画布的大小。与其他元素一样\<canvas>元素对应的DOM对象也有width和height属性，这二者之间的关系大家自己研究一下吧。
+
+要在这块画布上绘图，首先需要取得绘图的上下文，需要调用getContext()方法并传入“2d”。
+
+```
+var drawing = document.getElementById("drawing");
+
+//判断是否支持canvas
+if(drawing.getContext){
+var ctx = drawing.getContext("2d");
+// code
+}
+```
+ 
