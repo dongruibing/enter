@@ -20,8 +20,9 @@ var drawing = document.getElementById("drawing");
 
 //判断是否支持canvas
 if(drawing.getContext){
-var ctx = drawing.getContext("2d");
-// code
+    var ctx = drawing.getContext("2d");
+    // code
 }
 ```
  
+    
