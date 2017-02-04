@@ -54,3 +54,26 @@ if(drawing.getContext){
 * `react(x,y,width,height)`: 以(x,y)为左上顶点，以width和height为宽高，绘制一个矩形。
 
 创建路径后有一下几种选择：1、closePath():绘制一条连接到起点的线条；2、fill():用fillStyle填充路径；3、stroke():用strokeStyle对路径进行描边。4、clip():在路径上创建一个裁切区域,提示：一旦剪切了某个区域，则所有之后的绘图都会被限制在被剪切的区域内（不能访问画布上的其他区域）。也可以在使用 clip() 方法前通过使用 save() 方法对当前画布区域进行保存，并在以后的任意时间对其进行恢复（通过 restore() 方法）。
+
+####2.4 绘制文本
+
+* `font`: 表示文本样式、大小及字体。与CSS中设定方法相同。
+* `textAlign`: 文本的对其方式。
+* `textBaseline`: 文本的基线。
+* `fillText(text,x,y)`: 使用fillStyle绘制文本。
+* `strokeText(text,x,y)`: 使用strokeStyle为文本描边。
+* `measureText()`: 该方法返回一个对象，该对象目前只包含以像素计的指定字体得宽度width。
+
+####2.4 变换
+
+当年不好好学数学，以为现在当了程序猿搬砖就能摆脱魔爪了？呵呵，你想多了，出来混迟早要还的。
+
+* `rotate(angle)`: 围绕原点旋转绘图angle`弧度`,旋转只会影响到旋转完成后的绘图。
+* `scale(scaleX,scaleY)`: 缩放图像，在x轴方向乘以scaleX,y轴方向乘以scaleY。
+* `translate(x,y)`: 将坐标原点移到(x,y)。
+* `transform(m1_1,m2_2,m2_1,m2_2,dx,dy)`: 直接修改变换矩阵，上述旋转，缩放，平移都可以用transform()实现，假设点A(x,y)到点B(x',y'）变换变换矩阵的算法为:
+
+* `transform(m1_1,m1_2,m2_1,m2_2,dx,dy)`: 直接修改变换矩阵，上述旋转，缩放，平移都可以用transform()实现，假设点A(x,y)到点B(x',y'）变换变换矩阵的算法为:
+> x' = x*m1_1 + y*m1_2 + 1*dx
+
+> y' = x*m2_1 + y*m2_2 + 1*dy
