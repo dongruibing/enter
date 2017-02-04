@@ -81,7 +81,7 @@ if(drawing.getContext){
 
 由此可见：
 
-> `transform(Math.cos(θ\*Math.PI/180),Math.sin(θ\*Math.PI/180),-Math.sin(θ\*Math.PI/180),Math.cos(θ\*Math.PI/180),0,0)` = `rotate(θ)`
+> `transform(Math.cos(θ*Math.PI/180),Math.sin(θ*Math.PI/180),-Math.sin(θ*Math.PI/180),Math.cos(θ*Math.PI/180),0,0)` = `rotate(θ)`
 
 > `transform(scaleX,0,0,scaleY,0,0)` = `scale(scaleX,scaleY)`
 
@@ -98,33 +98,12 @@ if(drawing.getContext){
 
 ####2.7 使用图像数据
 
-使用图像功能非常强大，getImageData()可以直接获取原始图像数据，此方法返回一个
+使用图像功能非常强大，getImageData()可以直接获取原始图像数据，此方法返回一个对象，此对象包含三个属性：width、height和data。data属性是一个数组，保存着图像中每一个像素的数据，每一个像素用4个元素保存，分别为r、g、b、a值，为什么说这个功能强大呢？由此可看出你可以随意操控图像中的任意一个像素的值，图像处理，模式识别莫过于此。
 
+* `getImageData(x,y,width,height)`: 返回 ImageData 对象，该对象为画布上指定的矩形复制像素数据。
 
+* `putImageData(imgData,x,y,dirtyX,dirtyY,dirtyWidth,dirtyHeight)`: 将imgData对象数据放回画布上。
 
+* `createImageData(width,height)`: 以指定的尺寸（以像素计）创建新的 ImageData 对象。
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+* `.createImageData(imageData)`: 创建与指定的另一个 ImageData 对象尺寸相同的新 ImageData 对象（不会复制图像数据）。
