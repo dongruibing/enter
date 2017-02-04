@@ -59,12 +59,12 @@ if(drawing.getContext){
 
 * `font`: 表示文本样式、大小及字体。与CSS中设定方法相同。
 * `textAlign`: 文本的对其方式。
-* `textBaseline`: 文本的基线。
+* `textBaseline`: 文本的基线。zuobiao
 * `fillText(text,x,y)`: 使用fillStyle绘制文本。
 * `strokeText(text,x,y)`: 使用strokeStyle为文本描边。
 * `measureText()`: 该方法返回一个对象，该对象目前只包含以像素计的指定字体得宽度width。
 
-####2.4 变换
+####2.5 变换
 
 当年不好好学数学，以为现在当了程序猿搬砖就能摆脱魔爪了？呵呵，你想多了，出来混迟早要还的。
 
@@ -75,6 +75,56 @@ if(drawing.getContext){
 
 * `transform(m1_1,m1_2,m2_1,m2_2,dx,dy)`: 直接修改变换矩阵，上述旋转，缩放，平移都可以用transform()实现，假设点A(x,y)到点B(x',y'）变换变换矩阵的算法为:
 
-> x' = x*m1_1 + y*m1_2 + 1*dx
+> x' = x\*m1_1 + y\*m1_2 + 1\*dx
 
-> y' = x*m2_1 + y*m2_2 + 1*dy
+> y' = x\*m2_1 + y\*m2_2 + 1\*dy
+
+由此可见：
+
+> `transform(Math.cos(θ\*Math.PI/180),Math.sin(θ\*Math.PI/180),-Math.sin(θ\*Math.PI/180),Math.cos(θ\*Math.PI/180),0,0)` = `rotate(θ)`
+
+> `transform(scaleX,0,0,scaleY,0,0)` = `scale(scaleX,scaleY)`
+
+> `transform(1,0,0,1,dx,dy)` = `translate(dx,dy)`
+
+
+####2.6 绘制图像
+
+* `drawImage(img,x,y)`: 在画布上绘制一个图像，图像位置为(x,y)。
+
+* `drawImage(img,x,y,width,height)`: 在画布上绘制一个图像，图像位置为(x,y)，宽高分别为width和height。
+
+* `drawImage(img,sx,sy,swidth,sheight,x,y,width,height)`: 将原图像坐标(sx,sy)，宽高为swidth,sheight的区域，绘制到画布坐标为(x,y), 宽高为width,height区域。
+
+####2.7 使用图像数据
+
+使用图像功能非常强大，getImageData()可以直接获取原始图像数据，此方法返回一个
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
