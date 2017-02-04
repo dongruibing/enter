@@ -74,6 +74,7 @@ if(drawing.getContext){
 * `transform(m1_1,m2_2,m2_1,m2_2,dx,dy)`: 直接修改变换矩阵，上述旋转，缩放，平移都可以用transform()实现，假设点A(x,y)到点B(x',y'）变换变换矩阵的算法为:
 
 * `transform(m1_1,m1_2,m2_1,m2_2,dx,dy)`: 直接修改变换矩阵，上述旋转，缩放，平移都可以用transform()实现，假设点A(x,y)到点B(x',y'）变换变换矩阵的算法为:
+
 > x' = x*m1_1 + y*m1_2 + 1*dx
 
 > y' = x*m2_1 + y*m2_2 + 1*dy
