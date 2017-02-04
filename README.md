@@ -107,3 +107,30 @@ if(drawing.getContext){
 * `createImageData(width,height)`: 以指定的尺寸（以像素计）创建新的 ImageData 对象。
 
 * `.createImageData(imageData)`: 创建与指定的另一个 ImageData 对象尺寸相同的新 ImageData 对象（不会复制图像数据）。
+
+
+####2.8 阴影
+
+* `shadowColor`: 设置或返回用于阴影的颜色。
+
+* `shadowBlur`: 设置或返回用于阴影的模糊级别。
+
+* `shadowOffsetX`: 设置或返回阴影与形状的水平距离。
+
+* `shadowOffsetY`: 设置或返回阴影与形状的垂直距离。
+
+####2.9 渐变
+
+* `createLinearGradient(x0,y0,x1,y1)`: 创建线性渐变。(x0,y0)：起点，(x1,y1):终点。
+
+* `createRadialGradient(x0,y0,r0,x1,y1,r1)`: 创建放射性渐变，从一个圆到另一个圆。
+
+* `addColorStop(stop,color)`: 规定渐变对象中的颜色和位置。stop:0~1;color:颜色，可以多次使用。
+ 
+####2.10 模式
+
+
+
+####2.11 合成
+
+
