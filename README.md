@@ -31,33 +31,26 @@ if(drawing.getContext){
 
 ####2.1 填充和描边
 
-* fillStyle: 设置或返回用于填充绘画的颜色、渐变或模式。可以使用CSS中指定颜色的值得任何格式。
-* strokeStyle: 设置或返回用于笔触的颜色、渐变或模式。可以使用CSS中指定颜色的值得任何格式。
+* `fillStyle`: 设置或返回用于填充绘画的颜色、渐变或模式。可以使用CSS中指定颜色的值得任何格式。
+* `strokeStyle`: 设置或返回用于笔触的颜色、渐变或模式。可以使用CSS中指定颜色的值得任何格式。
 
 ####2.2 绘制矩形
 
-* fillRect(x,y,width,height): 绘制"被填充"的矩形，填充颜色由fillStyle属性指定。
-* strokeRect(x,y,width,height)	绘制矩形（无填充），描边颜色由strokeStyle属性指定。
-* clearRect(x,y,width,height): 清除一块矩形区域像素值，以便再次绘制图形。
+* `fillRect(x,y,width,height)`: 绘制"被填充"的矩形，填充颜色由fillStyle属性指定。
+* `strokeRect(x,y,width,height)`:	绘制矩形（无填充），描边颜色由strokeStyle属性指定。
+* `clearRect(x,y,width,height)`: 清除一块矩形区域像素值，以便再次绘制图形。
 
 以上方法参数中x,y为矩形左上角顶点坐标，width,height为矩形的宽和高。
 
 ####2.3 绘制路径
 
-* arc(x,y,radius,startAngle,endAngle,counterclockwise): 以(x,y)为圆心，以radius为半径，以startAngle为起始角度，以endAngle为结束角度绘制一条弧线。counterclockwise表示是否按逆时针方向计算，false表示顺时针
-* arcTo(x1,y1,x2,y2,radius): 从上一点,设为(x0,y0)开始绘制一条弧线,假设点(x0,y0)为A点，点(x1,y1)为B点，点(x2,y2)为C点，弧线以radius为半径，并且与∠ABC的两条边相切，如果切点不是A、C两点，那么切点将与A、C两点直线相连。
-* bezierCurveTo(c1x,c1y,c2x,c2y,x,y): 从上一点开始绘制一条贝塞尔曲线，到(x,y)为止，以(c1x,c1y),(c2x,c2y)为控制点。
-* lineTo(x,y): 从上一点开始绘制一条直线到(x,y)。
-* moveTo(x,y): 将绘图游标移到点(x,y)，不画线。
+绘制路径需要首先调用beginPath()方法，表示开始绘制路径，然后调用如下方法绘制所需图形。
+* `arc(x,y,radius,startAngle,endAngle,counterclockwise)`: 以(x,y)为圆心，以radius为半径，以startAngle为起始角度，以endAngle为结束角度绘制一条弧线。counterclockwise表示是否按逆时针方向计算，false表示顺时针
+* `arcTo(x1,y1,x2,y2,radius)`: 从上一点,设为(x0,y0)开始绘制一条弧线,假设点(x0,y0)为A点，点(x1,y1)为B点，点(x2,y2)为C点，弧线以radius为半径，并且与∠ABC的两条边相切，如果切点不是A、C两点，那么切点将与A、C两点直线相连。
+* `bezierCurveTo(c1x,c1y,c2x,c2y,x,y)`: 从上一点开始绘制一条三次贝塞尔曲线，到(x,y)为止，以(c1x,c1y),(c2x,c2y)为控制点。
+* `lineTo(x,y)`: 从上一点开始绘制一条直线到(x,y)。
+* `moveTo(x,y)`: 将绘图游标移到点(x,y)，不画线。
+* `quadrticCurveTo(cx,cy,x,y)`: 从上一点开始绘制一条二次贝塞尔曲线，cx、cy为控制点，以(x,y)为结束点。
+* `react(x,y,width,height)`: 以(x,y)为左上顶点，以width和height为宽高，绘制一个矩形。
 
-以上方法参数中x,y为矩形左上角顶点坐标，width,height为矩形的宽和高。
-
-
-
-
-
-
-
-
-
-
+创建路径后有一下几种选择：1、closePath():绘制一条连接到起点的线条；2、fill():用fillStyle填充路径；3、stroke():用strokeStyle对路径进行描边。4、clip():在路径上创建一个裁切区域,提示：一旦剪切了某个区域，则所有之后的绘图都会被限制在被剪切的区域内（不能访问画布上的其他区域）。也可以在使用 clip() 方法前通过使用 save() 方法对当前画布区域进行保存，并在以后的任意时间对其进行恢复（通过 restore() 方法）。
