@@ -4,14 +4,11 @@
 	<meta charset="UTF-8">
 	<title>明星、神豪入场测试</title>
 	<style type="text/css">
-		body{background-color: pink; padding:0; margin:0;}
+		body{background-color: ; padding:0; margin:0;}
 		h1{font-size: 60px; text-align: center; color: blue;}
 		/*.box{ position:absolute; padding: 0 50px; margin: 0 50px; top:0; left:0; background-color: rgba(0,0,0,0.5); }*/
 		.box{left: 0;top:0; width:100%; text-align: center;}
-		.canvas{border:1px solid red; width:750px;height: 1334px; margin-left:;} //宽屏：2373 X 1334； 窄屏：750 X 1334
-
-
-		
+		.canvas{border:1px solid red; width:2373px;height: 1334px; margin-left:;} //宽屏：2373 X 1334； 窄屏：750 X 1334
 		.btn{height: 60px; font-size:30px;line-height: 60px;}
 	</style>
 </head>
@@ -23,6 +20,9 @@
 	<div style="position: relative;">
 		<div class="box">
 			<canvas class="canvas" >您的浏览器不支持canvas</canvas>
+			<canvas id="drawing" width="200" height="200">这是一块画布。</canvas>
+
+
 		
 		</div>
 	</div>
@@ -47,6 +47,16 @@
 	<script type="text/javascript" src="./src/gift.js"></script>
 
 	<script type="text/javascript">
+		var drawing = document.getElementById("drawing");
+
+		//判断是否支持canvas
+		if(drawing.getContext){
+			var ctx = drawing.getContext("2d");
+			// code
+		}
+	</script>
+
+	<script type="text/javascript">
 
 		var canvas = document.getElementsByTagName("canvas")[0];
 		var option1 = {
@@ -57,7 +67,7 @@
 		var option2 = {
 			type: 2,
 			// avatar: "http://alcdn.img.xiaoka.tv/20161207/9b2/537/94000048/9b2537650d728cede48029d2549f37bf.jpg@1e_1c_0o_0l_363h_363w_100q_1pr.jpg"
-			avatar: "img/img01.jpg"
+			avatar: "img/img02.jpg"
 
 		};
 		// enter.animate(canvas,option,function(e){console.log("完成")});

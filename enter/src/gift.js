@@ -263,7 +263,7 @@
 			var startTime ;
 
 			
-			if(canvas.getContext('2d')){
+			if(canvas.getContext('2d')){                   //获取2D上下文
 				enter.ctx = canvas.getContext('2d');
 			}else{
 				if(callback){
@@ -271,17 +271,17 @@
 				}
 				return;
 			}
-			enter.canvas = canvas;
-			enter.type = option.type;
+			enter.canvas = canvas;                         //
+			enter.type = option.type;					   //1：明星入场；2：神豪入场
 			
-			avatar.image = new Image();
+			avatar.image = new Image();					   //获取用户头像
 			avatar.ready = false;
 			avatar.image.onload = function(){
 				avatar.ready = true;
 			}
 			avatar.image.src = option.avatar;
 
-			var width1,height1;
+			var width1,height1; 							//判断是横屏直播间还是竖屏直播间
 			width1 = getStyle(canvas, "width");
 			width1 = parseInt(width1);
 			height1 = getStyle(canvas, "height");
@@ -296,7 +296,7 @@
 
 			if(enter.load == true){
 				requestAnimFrame(play);
-			}else{
+			}else{											//加载zip包
 				var hostname = location.hostname.indexOf("test1") == -1 ? "static.yizhibo.com" : "static.yizhibo.com"; //teststatic.yizhibo.com
 				gift._getBinaryContent("//" + hostname+ "/js/libs/gift/zips/enter.zip", function(err, data) {
 				    if(err) {
@@ -308,16 +308,16 @@
 				        return;
 				    }
 				    var zip = new JSZip();
-				    zip.loadAsync(data)
+				    zip.loadAsync(data) 				//
 				    .then(function(zip){
-				    	var starFs = (zip.file(/^mingxing\/[0-9]{1,}.png$/));
-				    	var shenhaoFs = (zip.file(/^shenhao\/[0-9]{1,}.png$/));
-				    	var lightFs = (zip.file(/^light\/[0-9]{1,}.png$/));
-				    	var backFs = (zip.file(/^back\/[0-9]{1,}.png$/));
+				    	var starFs = (zip.file(/^mingxing\/[0-9]{1,}.png$/));       //明星入场图片文件
+				    	var shenhaoFs = (zip.file(/^shenhao\/[0-9]{1,}.png$/));		//神豪入场图片文件
+				    	var lightFs = (zip.file(/^light\/[0-9]{1,}.png$/));			//灯光图片文件
+				    	var backFs = (zip.file(/^back\/[0-9]{1,}.png$/));			//星光背景图片文件
 
 				    	var promiseList = [];
 
-				    	sortFs(starFs);
+				    	sortFs(starFs);        //图片排序
 				    	sortFs(shenhaoFs);
 				    	sortFs(lightFs);
 				    	sortFs(backFs);
@@ -341,7 +341,7 @@
 
 					   return JSZip.external.Promise.all(promiseList)
 					    .then(function(list){
-					    	list = list.map(function(item, index, array){
+					    	list = list.map(function(item, index, array){          //将图片文件生成为base64格式的图片并存储在各自的数组中，以备后续使用
 					    		var img = new Image();
 					    		img.src = "data:image/png;base64," + item;
 					    		return img;
@@ -381,7 +381,7 @@
 			}
 
 
-			function play(timestamp){
+			function play(timestamp){                 //动画运行控制
 				if(!startTime){
 					startTime = timestamp;
 				}
@@ -416,7 +416,7 @@
 		    	}			
 			}
 
-			function sortFs(files){
+			function sortFs(files){                      //文件排序
 				files.sort(function(v1, v2){
 					v1 = v1.name.match(/([0-9]+)\.png/)[1];
 		    		v2 = v2.name.match(/([0-9]+)\.png/)[1];
@@ -427,24 +427,25 @@
 			}
 
 		}
-		var star = {
+
+		var star = {				//明星绘图控制
 			images: [],
-			X: 125,
+			X: 125,					//竖屏直播间绘图位置起始点
 			Y: 310,
 			// X1: 936,
 			// Y1: 310,
-			X1: 540.6,
+			X1: 540.6,				//横屏直播播间绘图起始点
 			Y1: 156.6,
-			interval: 40,
-			draw: function(t){
-				var index = Math.floor(t/this.interval);
+			interval: 40,			//帧速率控制
+			draw: function(t){		
+				var index = Math.floor(t/this.interval); //当前帧计算
 
-				if(index >= this.images.length){
+				if(index >= this.images.length){     
 					index = this.images.length-1;
 				}
-				if(enter.screenTpy == 1){
+				if(enter.screenTpy == 1){                //竖屏
 					enter.ctx.drawImage(this.images[index], this.X, this.Y);
-				}else{
+				}else{									//横屏
 					enter.ctx.save();
 					enter.ctx.scale(1.5, 1.5);
 					enter.ctx.drawImage(this.images[index], this.X1, this.Y1);
@@ -453,7 +454,7 @@
 				
 			}
 		};
-		var shenhao = {
+		var shenhao = {				//神豪绘图控制
 			images:[],
 			X: 123,
 			Y: 308,
@@ -480,22 +481,22 @@
 				
 			}
 		};
-		var light = {
+		var light = {					//灯光绘图控制
 			images:[],
-			startTime: 2400,
-			interval: 100,
-			step: 0.5233,
-			angle: 0,
+			startTime: 2400,            //灯光开始时间
+			interval: 100,				//灯光角度控制周期
+			step: 0.5233,				//灯光每次改变角度值,暂时没用
+			angle: 0,					//灯光角度
 			draw: function(t){
 				if(t > this.startTime){
-					var index = parseInt((t - this.startTime)/this.interval);
+					var index = parseInt((t - this.startTime)/this.interval); //帧计算
 
 					
 					if(index < 16){
-						this.angle = 15*Math.PI/180*(Math.sin(index*Math.PI/15 - Math.PI/2)+1)/2;
+						this.angle = 15*Math.PI/180*(Math.sin(index*Math.PI/15 - Math.PI/2)+1)/2;  //角度计算，灯光内摆,摆动角度按正弦-π/2~π/2区间变化最大内摆15°
 					}
 
-					if(index >= 20 && index < 45){
+					if(index >= 20 && index < 45){                       //16~20帧停止摆动，20帧后向外摆动
 						index -= 5;
 						this.angle = 15*Math.PI/180*(Math.sin(index*Math.PI/30));
 					
@@ -503,22 +504,22 @@
 
 					var ctx = enter.ctx;
 
-					if(enter.screenTpy == 1){
+					if(enter.screenTpy == 1){              //竖屏直播间
 						ctx.save();
-						ctx.translate(220, -25);
+						ctx.translate(220, -25);           //移动原点到灯光发出点
 						ctx.scale(2, 2);
-						ctx.rotate(-this.angle);
-						ctx.drawImage(this.images[0], -220, -25);
+						ctx.rotate(-this.angle);			//灯光图片太小，放大2倍
+						ctx.drawImage(this.images[0], -220, -25);   //绘制左侧灯光
 
 						ctx.restore();
 						ctx.save();
-						ctx.translate(530, -25);
+						ctx.translate(530, -25);          //同理绘制右侧灯光
 						ctx.scale(2, 2);
 						ctx.rotate(this.angle);
 						ctx.drawImage(this.images[1], -530, -25);
 						ctx.restore();
 						
-					}else{
+					}else{                                   //横屏直播间
 						ctx.save();
 						ctx.translate(1031, -25);
 						ctx.scale(2, 2);
@@ -538,26 +539,26 @@
 
 			}
 		};
-		var back = {
+		var back = {					//星光绘图控制
 			images:[],
-			startTime: 2400,
-			interval: 100,
-			opacity: 1,
+			startTime: 2400,            //开始时间
+			interval: 100,				//帧周期
+			opacity: 1,                 //初始透明度
 			draw: function(t){
 				if(t > this.startTime){
-					var index = parseInt((t - this.startTime)/this.interval); 
+					var index = parseInt((t - this.startTime)/this.interval);      //帧计算 
 
-					 this.opacity = (Math.cos(index/10*Math.PI) + 1)/2;
+					 this.opacity = (Math.cos(index/10*Math.PI) + 1)/2;            //图片透明度计算，按余弦函数规律变化
 					 
 					 var ctx = enter.ctx;
-					 if(enter.screenTpy == 1){
+					 if(enter.screenTpy == 1){                                  //竖屏
 					 	 ctx.save();
-						 ctx.globalAlpha = this.opacity ;
-						 ctx.drawImage(this.images[0], 0, 0);
-						 ctx.globalAlpha = 1-this.opacity;
+						 ctx.globalAlpha = this.opacity ;						//设置绘图透明度
+						 ctx.drawImage(this.images[0], 0, 0);					
+						 ctx.globalAlpha = 1-this.opacity;						//两张背景图的透明度是互补的，一个变弱，另一个增强
 						 ctx.drawImage(this.images[1], 0, 0);
 						 ctx.restore();
-						}else{
+						}else{                                                 //横屏直播间稍复杂，星光背景是三张图片作为一组背景的
 						 ctx.save();
 						 ctx.globalAlpha = this.opacity ;
 						 ctx.drawImage(this.images[0], 50, 0);
@@ -578,38 +579,32 @@
 
 		
 
-		var avatar = {
-			X: 285,
+		var avatar = {							//用户头像绘图控制
+			X: 285,								//竖屏头像位置坐标
 			Y: 392,
 			// X1: 1096,
 			// Y1: 392,
-			X1: 699,
+			X1: 699,							//横屏头像位置坐标
 			Y1: 239,
-			r: 92,
+			r: 92,								//头像半径
 			image: "",
-			ready: false,
+			ready: false,						//头像图片是否加载完成
 			draw:function(t){
 				if(this.ready == true){
 					var ctx = enter.ctx;
-					if(enter.screenTpy == 1){
+					if(enter.screenTpy == 1){      //竖屏
 						ctx.save();
 					    ctx.beginPath();
-					    ctx.arc(this.X + this.r, this.Y + this.r, this.r, 0, 2*Math.PI); 
-					    ctx.fillStyle = "#fff";
-					    ctx.closePath();
-					    ctx.fill();
-					    ctx.globalCompositeOperation="source-atop";
-					    ctx.drawImage(this.image,0,0,this.image.width, this.image.height,this.X, this.Y,this.r*2,this.r*2);
+					    ctx.arc(this.X + this.r, this.Y + this.r, this.r, 0, 2*Math.PI);  //绘制一个和头像大小一样的圆形路径
+					    ctx.clip();       //将画布裁剪为路径所绘制的区域
+					    ctx.drawImage(this.image,0,0,this.image.width, this.image.height,this.X, this.Y,this.r*2,this.r*2); //将头像绘制到圆形区域内
 					    ctx.restore();
-					}else{
+					}else{                         	//横屏
 						ctx.save();
 						ctx.scale(1.5, 1.5);
 					    ctx.beginPath();
 					    ctx.arc(this.X1 + this.r, this.Y1 + this.r, this.r, 0, 2*Math.PI); 
-					    ctx.fillStyle = "#fff";
-					    ctx.closePath();
-					    ctx.fill();
-					    ctx.globalCompositeOperation="source-atop";
+					    ctx.clip();
 					    ctx.drawImage(this.image,0,0,this.image.width, this.image.height,this.X1, this.Y1,this.r*2,this.r*2);
 					    ctx.restore();
 					}
@@ -619,7 +614,7 @@
 			}
 		};
 
-		var ctrl = {
+		var ctrl = {							//整体透明度控制
 				startTime: 6960,
 				interval: 40,
 				opacity: 1,
